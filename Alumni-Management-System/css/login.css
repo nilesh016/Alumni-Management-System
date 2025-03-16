@@ -30,8 +30,8 @@ body {
 .login_container {
     max-width: 400px;
     width: 90%;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(20px);
     padding: 30px;
     border-radius: 15px;
     text-align: center;
@@ -54,7 +54,7 @@ body {
     align-items: center;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    margin: 10px 0;
+    margin: 12px 0;
     padding: 12px;
     transition: 0.3s ease-in-out;
 }
@@ -62,7 +62,8 @@ body {
 /* Icons */
 .input_container i {
     color: white;
-    margin-right: 10px;
+    margin-right: 12px;
+    font-size: 18px;
 }
 
 /* Input & Select Fields */
@@ -79,6 +80,15 @@ body {
     transition: all 0.3s ease-in-out;
 }
 
+/* Align Dropdown Text to Center */
+.login_form select {
+    text-align: center;
+    text-align-last: center; /* Ensures selected option is centered */
+    appearance: none;
+    box-shadow: none;
+    padding-right: 20px;
+}
+
 /* Hover & Focus Effects */
 .login_form input:focus, .login_form select:focus {
     background: rgba(255, 255, 255, 0.3);
@@ -86,19 +96,12 @@ body {
     border-bottom: 2px solid #ffcc00;
 }
 
-/* Dropdown (Select) Styling */
-.login_form select {
-    appearance: none;
-    box-shadow: none;
-    padding-right: 20px;
-}
-
 /* Placeholder Styling */
 .login_form input::placeholder {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* Login Button */
+/* Buttons */
 .login_form button {
     width: 100%;
     padding: 12px;
@@ -117,24 +120,24 @@ body {
 #registerBtn {
     background: linear-gradient(135deg, #ff4d4d, #ff0000);
     color: white;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
-/* Button Hover Effect */
+/* Button Hover Effects */
 .login_form button:hover {
     background: linear-gradient(135deg, #ffdd44, #ff8800);
-    transform: scale(1.05);
+    transform: scale(1.08);
     box-shadow: 0px 10px 25px rgba(255, 165, 0, 0.5);
 }
 
-/* Register Button Hover Effect */
 #registerBtn:hover {
     background: linear-gradient(135deg, #ff6666, #cc0000);
+    transform: scale(1.08);
 }
 
 /* Links (Home & Forgot Password) */
 .link_container {
-    margin-top: 15px;
+    margin-top: 20px;
     display: flex;
     justify-content: space-between;
     font-size: 16px;
