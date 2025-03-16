@@ -1,71 +1,115 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>TMSL Alumni Member Register</title>
-</head>
-<link rel="stylesheet" href="css/register.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IIT-ISM Alumni Member Register</title>
 
+    <!-- Google Fonts & External CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/register.css"> <!-- Linking the external CSS -->
+</head>
 <body>
+
 <div class="register_wrapper">
-	<div class="register_container">
-		<h1>Register Now!</h1>
-		
-		<form class="register_form" method="post">
-			<input type="text" placeholder="Full Name" name="pi_name" required>
-			<select id="select" name="pi_gender" required>
-				<option>Gender</option>
-				<option>Male</option>							
-				<option>Female</option>
-				<option>Others</option>
-			</select>
-			<input type="text" placeholder="Registration Number" name="pi_register" required>
-			<select id="select" name="pi_branch" required>
-				<option>Branch</option>							
-				<option>CSE</option>
-				<option>ECE</option>
-				<option>EE</option>
-				<option>AIEI</option>
-				<option>FOOD</option>
-				<option>MECH</option>
-				<option>IT</option>
-			</select>
-			<select id="select" name="pi_session" required>
-				<option>Session</option>							
-				<option>2005-2009</option>
-				<option>2006-2010</option>
-				<option>2007-2011</option>
-				<option>2008-2012</option>
-				<option>2009-2013</option>
-				<option>2010-2014</option>
-				<option>2011-2015</option>
-				<option>2012-2016</option>
-				<option>2013-2017</option>
-				<option>2014-2018</option>
-				<option>2015-2019</option>
-				<option>2016-2020</option>
-			</select>
-			<input type="email" placeholder="Email" name="pi_email" required>
-			<input type="text" placeholder="Mobile Number" name="pi_mobile" id="mobile" maxlength="10" pattern="[0-9]{10}"required>
-			<input type="password" placeholder="Password" name="pi_password" required>
-            <button type="submit" name="register" formaction="registration_status.php" onclick="check()" >Register</button>
-            <br /><br /><a href="index.php">Register Later</a>
-		</form>
-	</div>
-</body>
+    <div class="register_container">
+        <h1>Register Now!</h1>
+
+        <!-- Course Selection Buttons -->
+        <div class="course_selection">
+            <button type="button" class="course_btn" onclick="selectCourse('B.Tech', 4)">B.Tech (4 Years)</button>
+            <button type="button" class="course_btn" onclick="selectCourse('M.Tech', 2)">M.Tech (2 Years)</button>
+            <button type="button" class="course_btn" onclick="selectCourse('Integrated M.Tech', 5)">Integrated M.Tech (5 Years)</button>
+        </div>
+
+        <form class="register_form" method="post" action="registration_status.php">
+            <!-- Hidden Input to Store Course -->
+            <input type="hidden" id="selected_course" name="pi_course" value="">
+
+            <div class="input_container">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" placeholder="Full Name" name="pi_name" required>
+            </div>
+
+            <select name="pi_gender" required>
+                <option value="" disabled selected>Gender</option>
+                <option>Male</option>							
+                <option>Female</option>
+                <option>Others</option>
+            </select>
+
+            <div class="input_container">
+                <i class="fa-solid fa-id-card"></i>
+                <input type="text" placeholder="Registration Number" name="pi_register" required>
+            </div>
+
+            <select name="pi_branch" required>
+                <option value="" disabled selected>Branch</option>							
+                <option>CSE</option>
+                <option>ECE</option>
+                <option>EE</option>
+                <option>AIEI</option>
+                <option>FOOD</option>
+                <option>MECH</option>
+                <option>IT</option>
+            </select>
+
+            <!-- Session Dropdown (Updates Based on Course Selection) -->
+            <select id="sessionSelect" name="pi_session" required>
+                <option value="" disabled selected>Select Session</option>
+            </select>
+
+            <div class="input_container">
+                <i class="fa-solid fa-envelope"></i>
+                <input type="email" placeholder="Email" name="pi_email" required>
+            </div>
+
+            <div class="input_container">
+                <i class="fa-solid fa-phone"></i>
+                <input type="text" placeholder="Mobile Number" name="pi_mobile" id="mobile" maxlength="10" pattern="[0-9]{10}" required>
+            </div>
+
+            <div class="input_container">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" placeholder="Password" name="pi_password" required>
+            </div>
+
+            <!-- Buttons Container -->
+            <div class="button_container">
+                <button type="submit" name="register">Register</button>
+                <button type="button" onclick="location.href='login.html'">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- FontAwesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+
+<!-- JavaScript for Course Selection and Session Update -->
 <script>
-	function check(){
-	var phoneno=/^\d{10}$/;
-	var my=document.getElementById('mobile')
-	if(my.value.match(phoneno))
-	{
-		return true;
-	}
-	else
-	{
-		alert ("ENTER VALID MOBILE NUMBER");
-		return false;
-	}
-	}
+    function selectCourse(course, duration) {
+        document.getElementById("selected_course").value = course;
+
+        // Highlight selected button
+        let buttons = document.querySelectorAll(".course_btn");
+        buttons.forEach(btn => btn.classList.remove("selected"));
+        event.target.classList.add("selected");
+
+        // Update session dropdown dynamically
+        let sessionDropdown = document.getElementById("sessionSelect");
+        sessionDropdown.innerHTML = "<option value='' disabled selected>Select Session</option>";
+        let currentYear = new Date().getFullYear();
+        for (let i = 0; i < 10; i++) {
+            let startYear = currentYear - i;
+            let endYear = startYear + duration;
+            let option = document.createElement("option");
+            option.value = `${startYear}-${endYear}`;
+            option.textContent = `${startYear}-${endYear}`;
+            sessionDropdown.appendChild(option);
+        }
+    }
 </script>
+
+</body>
 </html>

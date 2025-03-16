@@ -1,18 +1,19 @@
-// JavaScript Document
+// Select the scroll-to-top button
+const scrollToTopBtn = document.getElementById("alumnihome_totop");
 
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
+// Check if the button exists to avoid errors
+if (scrollToTopBtn) {
+    // Attach scroll event listener
+    window.addEventListener("scroll", toggleScrollButton);
 
-function scrollFunction() {
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-        document.getElementById("alumnihome_totop").style.display = "block";
-    } else {
-        document.getElementById("alumnihome_totop").style.display = "none";
+    // Show or hide the button based on scroll position
+    function toggleScrollButton() {
+        const scrollThreshold = 500; // Show button after 500px scroll
+        scrollToTopBtn.style.display = (window.scrollY > scrollThreshold) ? "block" : "none";
     }
-}
 
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
+    // Smoothly scroll to the top when the button is clicked
+    scrollToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
 }

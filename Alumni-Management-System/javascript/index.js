@@ -1,45 +1,45 @@
 // JavaScript Document
 
-var slideIndex = 1;
-showSlides(slideIndex);
+document.addEventListener("DOMContentLoaded", () => {
+  let slideIndex = 1;
+  showSlides(slideIndex);
 
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
+  // Slideshow Navigation
+  document.querySelectorAll(".prev, .next").forEach(button => {
+      button.addEventListener("click", event => {
+          let n = event.target.classList.contains("prev") ? -1 : 1;
+          showSlides(slideIndex += n);
+      });
+  });
 
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
+  document.querySelectorAll(".dot").forEach((dot, index) => {
+      dot.addEventListener("click", () => showSlides(slideIndex = index + 1));
+  });
 
-function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1}    
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  
+  function showSlides(n) {
+      let slides = document.querySelectorAll(".mySlides");
+      let dots = document.querySelectorAll(".dot");
+
+      if (n > slides.length) slideIndex = 1;
+      if (n < 1) slideIndex = slides.length;
+
+      slides.forEach(slide => slide.style.display = "none");
+      dots.forEach(dot => dot.classList.remove("active"));
+
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].classList.add("active");
   }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
+
+  // Scroll-to-Top Button
+  const scrollToTopBtn = document.getElementById("index_totop");
+
+  if (scrollToTopBtn) {
+      window.addEventListener("scroll", () => {
+          scrollToTopBtn.style.display = window.scrollY > 500 ? "block" : "none";
+      });
+
+      scrollToTopBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+      });
   }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-}
-
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-        document.getElementById("index_totop").style.display = "block";
-    } else {
-        document.getElementById("index_totop").style.display = "none";
-    }
-}
-
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-}
+});

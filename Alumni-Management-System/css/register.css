@@ -1,99 +1,143 @@
 @charset "utf-8";
-/* CSS Document */
 
-body
-{
-	box-sizing: border-box;
-	color:white;
-	margin: 0;
-	padding: 0;
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
-.register_wrapper 
-{
-  background: linear-gradient(to bottom right, red 0%, #050119 100%);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+
+/* Full-Screen Background */
+body {
+    background: linear-gradient(to bottom right, #6a11cb 0%, #2575fc 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
-.register_container 
-{
-  max-width: 500px;
-  margin:  0 auto;
-  text-align: center;
+
+/* Wrapper to Center Content */
+.register_wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.register_container h1 
-{
-  font-size: 45px;
-  transition:1s;
-  font-weight: 500;
+
+/* Form Container */
+.register_container {
+    max-width: 450px;
+    width: 90%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
-.register_form 
-{
-  padding: 0px 0;
-  position: relative;
-  z-index: 2;
+
+/* Course Selection Buttons */
+.course_selection {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
 }
-.register_form select
-{
-	outline: 0;
-  	border: 1px solid white;
-  	background:rgba(156, 12, 12, 0.5);
-  	width: 280px;
-  	border-radius: 3px;
-  	padding: 10px 15px;
-  	margin: 0 auto 10px auto;
-  	display: block;
-  	text-align: center;
-  	font-size: 18px;
-  	color: white;
-  	font-weight: 300;
+
+/* Default Course Button */
+.course_btn {
+    background: rgba(255, 255, 255, 0.3);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    font-size: 14px;
+    width: 30%;
+    font-weight: 600;
 }
-.register_form select:hover
-{
-	background-color:white;
-	color:#050119;
+
+/* Selected Course Button */
+.course_btn.selected {
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    color: black;
 }
-.register_form input 
-{
-  outline: 0;
-  border: 1px solid white;
-  background:rgb(222, 184, 135, 0.5);
-  width: 250px;
-  border-radius: 3px;
-  padding: 10px 15px;
-  margin: 0 auto 10px auto;
-  display: block;
-  text-align: center;
-  font-size: 18px;
-  color: #050119;
-  font-weight: 300;
+
+/* Hover Effect */
+.course_btn:hover {
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    color: black;
 }
-.register_form input:hover 
-{
-  background-color:white;
+
+/* Input Fields */
+.input_container {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 12px;
 }
-.register_form button 
-{
-  outline: 0;
-  background-color:#050119;
-  border:none;
-  padding: 15px 5px;
-  color:white;
-  border-radius: 5px;
-  width: 250px;
-  font-size: 18px;
+
+.input_container i {
+    color: white;
+    margin-right: 10px;
 }
-.register_form button:hover 
-{
-  background-color:red;
+
+.register_form input, .register_form select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    background: white;
+    color: black;
+    text-align: center;
+    outline: none;
 }
-.register_form a
-{
-	color:white; 
-	font-size:20px;
+
+/* Button Container */
+.button_container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
 }
-.register_form a:hover
-{
-	font-size:26px;
+
+/* Button Styles */
+.register_form button {
+    width: 45%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Register Button */
+.register_form button[name="register"] {
+    background: linear-gradient(135deg, #ffcc00, #ff9900);
+    color: black;
+    box-shadow: 0px 5px 15px rgba(255, 165, 0, 0.3);
+}
+
+.register_form button[name="register"]:hover {
+    background: linear-gradient(135deg, #ffdd44, #ff8800);
+    transform: scale(1.05);
+}
+
+/* Login Button */
+.register_form button[onclick*="login.html"] {
+    background: linear-gradient(135deg, #4a90e2, #007bff);
+    color: white;
+}
+
+.register_form button[onclick*="login.html"]:hover {
+    background: linear-gradient(135deg, #6ba6ff, #0056b3);
 }

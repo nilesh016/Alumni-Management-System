@@ -1,27 +1,76 @@
 @charset "utf-8";
-/* CSS Document */
 
-body
-{
-	background-color:white;
-	font-size:36px;
-  	width: 100%;
- 	height: 100%;
-	text-align:center;
+/* Reset Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.status
-{
-	font-size:16px;
-	color:red;
+/* Background */
+body {
+    background: linear-gradient(to bottom right, #4CAF50, #2196F3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
 }
-.status a
-{
-	font-size:18px;
-	color:blue;
+
+/* Status Wrapper */
+.status_wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.status a:hover
-{
-	font-size:18px;
-	color:red;
+
+/* Status Box */
+.status_container {
+    max-width: 500px;
+    width: 90%;
+    background: rgba(0, 0, 0, 0.8); /* Darker background for visibility */
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Headings */
+h1.success {
+    color: #00FF00; /* Green for success */
+    font-size: 24px;
+}
+
+h1.error {
+    color: #FF4444; /* Red for error */
+    font-size: 24px;
+}
+
+/* Paragraphs */
+p {
+    font-size: 16px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* Links */
+a {
+    color: #FFD700;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Countdown Timer */
+#countdown {
+    font-weight: bold;
+    color: #FFD700;
 }

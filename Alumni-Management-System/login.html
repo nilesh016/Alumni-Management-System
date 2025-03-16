@@ -1,30 +1,62 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>TMSL ALumni Login</title>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMSL Alumni Login</title>
 
-<link rel="stylesheet" href="css/login.css" />
-  
+    <!-- Google Fonts & External CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/login.css"> <!-- Linking external CSS -->
+</head>
 <body>
+
 <div class="login_wrapper">
-	<div class="login_container">
-		<h1>Welcome back!</h1>
-		
-		<form class="login_form" method="post">
-        	<select name="login_usertype" >
-            <option value="alumni">Alumni</option>
-            <option value="administrator"> Administrator</option>
-            </select>
-			<input type="text" placeholder="User Name" name="login_userid">
-			<input type="password" placeholder="Password" name="login_password">
-			<button type="submit" name="login" formaction="login_status.php">Login</button>
-            <button type="submit" name="register" formaction="register.html">Register</button>
-            <br /><br /><a href="index.php">Home</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="forgot_password.php">Forgot Password?</a>
-		</form>
-	</div>
+    <div class="login_container">
+        <h1>Welcome Back!</h1>
+        
+        <form class="login_form" method="post">
+            <div class="input_container">
+                <i class="fa-solid fa-user"></i>
+                <select name="login_usertype">
+                    <option value="alumni">Alumni</option>
+                    <option value="administrator">Administrator</option>
+                </select>
+            </div>
+
+            <div class="input_container">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" placeholder="User Name" name="login_userid" required>
+            </div>
+
+            <div class="input_container">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" placeholder="Password" name="login_password" required>
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" name="login" formaction="login_status.php">Login</button>
+
+            <!-- Register Button (Redirects to register.html) -->
+            <button type="button" id="registerBtn">Register</button>
+
+            <div class="link_container">
+                <a href="index.php">Home</a>
+                <a href="forgot_password.php">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
 </div>
+
+<!-- FontAwesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+
+<!-- JavaScript to Redirect to Register Page -->
+<script>
+    document.getElementById("registerBtn").addEventListener("click", function() {
+        window.location.href = "register.html";
+    });
+</script>
+
 </body>
 </html>

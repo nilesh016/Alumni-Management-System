@@ -1,18 +1,17 @@
 // JavaScript Document
 
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
+document.addEventListener("DOMContentLoaded", () => {
+    const scrollToTopBtn = document.getElementById("contact_totop");
 
-function scrollFunction() {
-    if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
-        document.getElementById("contact_totop").style.display = "block";
-    } else {
-        document.getElementById("contact_totop").style.display = "none";
+    if (scrollToTopBtn) {
+        // Show/hide button based on scroll position
+        window.addEventListener("scroll", () => {
+            scrollToTopBtn.style.display = window.scrollY > 500 ? "block" : "none";
+        });
+
+        // Scroll smoothly to the top when button is clicked
+        scrollToTopBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
     }
-}
-
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-}
+});
