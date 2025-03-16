@@ -11,28 +11,35 @@
 /* Hero Section */
 .hero {
     background: url('../pictures/iit_ism_heritage_1.jpg') no-repeat center center/cover;
-    height: 60vh;
+    height: 75vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
+    position: relative;
 }
 
+/* Glassmorphism Overlay */
 .overlay {
-    background: rgba(0, 0, 0, 0.6);
-    padding: 40px;
-    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 50px;
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
 }
 
+/* Hero Text */
 .hero h1 {
-    font-size: 36px;
-    font-weight: 600;
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #ffcc00;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 .hero p {
-    font-size: 18px;
-    font-weight: 300;
+    font-size: 20px;
+    font-weight: 400;
 }
 
 /* Slideshow */
@@ -40,26 +47,39 @@
     max-width: 100%;
     position: relative;
     margin: auto;
+    overflow: hidden;
 }
 
 .mySlides {
     display: none;
+    position: relative;
+    animation: fadeEffect 1.5s;
 }
 
-img {
+@keyframes fadeEffect {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+/* Slideshow Images */
+.mySlides img {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Slideshow Text Overlay */
 .text {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.6);
     color: white;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 /* Navigation Buttons */
@@ -67,65 +87,107 @@ img {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 18px;
-    padding: 10px;
+    font-size: 20px;
+    padding: 12px;
     color: white;
-    background: rgba(0, 0, 0, 0.5);
-    border: none;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-.prev { left: 10px; }
-.next { right: 10px; }
+.prev:hover, .next:hover {
+    background: rgba(255, 204, 0, 0.8);
+}
 
-/* Dots */
+.prev { left: 15px; }
+.next { right: 15px; }
+
+/* Dots for Slideshow */
 .dots-container {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .dot {
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     margin: 5px;
-    background: #ccc;
+    background: #bbb;
     border-radius: 50%;
     cursor: pointer;
+    transition: 0.3s;
 }
 
-.dot.active {
-    background: #1a237e;
+.dot.active, .dot:hover {
+    background: #ffcc00;
+    transform: scale(1.2);
 }
 
 /* Sections */
 section {
     max-width: 900px;
-    margin: 50px auto;
-    padding: 20px;
+    margin: 60px auto;
+    padding: 25px;
     background: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
     text-align: center;
+    transition: 0.3s;
+}
+
+section:hover {
+    transform: scale(1.02);
 }
 
 h2 {
-    font-size: 28px;
+    font-size: 30px;
     color: #1a237e;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 p {
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 18px;
+    line-height: 1.7;
     color: #333;
+}
+
+/* How to Register Image */
+.howto img {
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Footer */
 footer {
     background: #1a237e;
     color: white;
-    padding: 15px;
+    padding: 20px;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
+    margin-top: 30px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .hero {
+        height: 60vh;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    section {
+        padding: 20px;
+    }
 }

@@ -1,3 +1,5 @@
+<?php include_once "setting/index_navigation.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +13,6 @@
     <!-- External Stylesheets -->
     <link rel="stylesheet" href="css/header_navigationbar.css">
     <link rel="stylesheet" href="css/index.css">
-
-    <?php include_once "setting/index_navigation.php"; ?>
 </head>
 
 <body>
@@ -25,7 +25,7 @@
     </div>
 </header>
 
-<!-- Slideshow -->
+<!-- Slideshow Section -->
 <div class="slideshow-container">
     <div class="mySlides fade">
         <img src="pictures/iit_ism_heritage_1.jpg" width="100%">
@@ -57,9 +57,6 @@
 <section class="welcome">
     <h2>Welcome to IIT-ISM Alumni Network</h2>
     <p>
-        Are you missing them? Your coursemates, your squad, your friends who stayed up all night 
-        with you for assignments, gatherings, events, and so on?
-        <br><br>
         Join the IIT-ISM Alumni Association to reconnect with old friends, stay updated on events, 
         and expand your professional network.
     </p>
