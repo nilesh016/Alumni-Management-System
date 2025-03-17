@@ -1,114 +1,163 @@
 <?php
 session_start();
-if (!isset($_SESSION['id'])){
-	header("location:login.html");
+if (!isset($_SESSION['id'])) {
+    header("location:login.html");
+    exit();
 }
-else
-{
-	$userid=$_SESSION['id'];
-	$username1=$_SESSION['adname'];
-}
+
+$userid = $_SESSION['id'];
+$username1 = $_SESSION['adname'];
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Financial Record - New Payment</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Record - New Payment</title>
+    
+    <link rel="stylesheet" href="css/header_navigationbar.css" />
+    <link rel="stylesheet" href="css/add_forum_post.css"/>
+    
+    <?php include_once "setting/adminpage_navigation.php"; ?>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
 
-<link rel="stylesheet" href="css/header_navigationbar.css" />
-<link rel="stylesheet" href="css/add_forum_post.css"/>
+        h1, h3 {
+            text-align: center;
+        }
 
-<?php
-include_once "setting/adminpage_navigation.php";
-include_once "connect_database.php";
-?>
+        form {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .dropbtn {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 2px solid #050119;
+            background-color: cornsilk;
+            cursor: pointer;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        .submit-btn:hover {
+            background: #218838;
+        }
+    </style>
 </head>
-<style>
-.dropbtn {
-    background-color: cornsilk;
-    color: #050119;
-    padding: 5px 116px;
-    font-size: 15px;
-	border: 2px solid #050119;
-    cursor: pointer;
-}
 
-input.i1{
-padding: 3px 119px;
-    font-size: 15px;
-}
-	
-</style>
 <body>
-<form action="NewPayment.php" method="post">
-<table width="710" align="center" style="border:2px hidden;" cellspacing="20">
-<tr>
-<th align="left" width="450" style="border:hidden;font-size:25px"> Details of Payment: </th>
-<td> </td>
-</tr>
-<tr>
-<th align="left" width="450" style="border:hidden;font-size:18px">Payment ID: </th>
-<td width="450" style="border:hidden"><input size="45" type="text" value="" name="pid"/></td>
-</tr>
-<tr>
-<th align="left" width="450" style="border:hidden;font-size:18px">Alumni Registration Number: </th>
-<td width="450" style="border:hidden"><input size="45" type="text" value="" name="aid"/></td>
-</tr>
-<tr>
-<th align="left" width="450" style="border:hidden;font-size:18px">Payment Purpose </th>
-<td width="450" style="border:hidden">
-		<select class="dropbtn" name="pp" >
-            <option value="Yearly Membership">Yearly Membership</option>
-            <option value="Life-time Membership"> Life-time Membership</option>
-			<option value="Cash Donation">Cash Donation</option>
-			<option value="Registration Fee"> Registration Fee </option>
-			</td>
-</tr>
-<tr>
-<th align="left" width="450" style="border:hidden;font-size:18px">Payment Date: </th>
-<td width="450" style="border:hidden">
-<input class="i1" type="date" name="pd" max="2020-06-08"required /></td>
 
-</tr>
-<tr>
-<th align="left" width="450" style="border:hidden;font-size:18px">Payment Amount: </th>
-<td width="450" style="border:hidden"><input size="45" type="text" value="" name="pa"></td>
-</tr>
-<td colspan=2 align="right" style="border:hidden"><button type="submit" name="addpayment" >Add Payment</button></td>
-</tr>
-</table>
+<h1>Financial Record - New Payment</h1>
+
+<form action="" method="post">
+    <table align="center" cellspacing="10">
+        <tr>
+            <th align="left">Payment ID:</th>
+            <td><input class="input-field" type="text" name="pid" required></td>
+        </tr>
+        <tr>
+            <th align="left">Alumni Registration Number:</th>
+            <td><input class="input-field" type="text" name="aid" required></td>
+        </tr>
+        <tr>
+            <th align="left">Payment Purpose:</th>
+            <td>
+                <select class="dropbtn" name="pp" required>
+                    <option value="Yearly Membership">Yearly Membership</option>
+                    <option value="Life-time Membership">Life-time Membership</option>
+                    <option value="Cash Donation">Cash Donation</option>
+                    <option value="Registration Fee">Registration Fee</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th align="left">Payment Date:</th>
+            <td><input class="input-field" type="date" name="pd" required></td>
+        </tr>
+        <tr>
+            <th align="left">Payment Amount:</th>
+            <td><input class="input-field" type="text" name="pa" required></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="right">
+                <button type="submit" name="addpayment" class="submit-btn">Add Payment</button>
+            </td>
+        </tr>
+    </table>
 </form>
+
 <?php
-if(isset($_POST['addpayment']))
-{
-	$paymentid=$_REQUEST['pid'];
-	$paymentpurpose=$_REQUEST['pp'];
-	$paymentdate=$_REQUEST['pd'];
-	$paymentpaid=$_REQUEST['pa'];
-	$alid=$_REQUEST['aid'];
-	
-	if ($paymentid=='' || $paymentpurpose=='' || $paymentdate==''|| $paymentpaid=='' || $alid=='')
-	{
-		echo "<br /><p class=p1>*****Incomplete information. No payment inserted.*****</p>";
-	}
-	else
-	{
-		$sql1 = "INSERT INTO financialdata (payment_id, total_payment, payment_purpose, payment_date, pi_register) VALUES('$paymentid', '$paymentpaid', '$paymentpurpose', '$paymentdate', '$alid')";
+include_once "connect_database.php";
 
-		if ($conn->query($sql1) === TRUE) 
-		{
-	    	echo "<br /><p class=p1>*****Payment successfully inserted.*****</p>";
-			echo "<br /><p class=p2><a href=Financial_Record.php>Go to Financial Record</a></p>";
-			} 
-		else 
-			{
-    				echo "Error: " . $sql . "<br>" . $conn->error;
-			}
-		
-	}	
+if (isset($_POST['addpayment'])) {
+    $paymentid = $_POST['pid'];
+    $paymentpurpose = $_POST['pp'];
+    $paymentdate = $_POST['pd'];
+    $paymentpaid = $_POST['pa'];
+    $alid = $_POST['aid'];
+
+    if (empty($paymentid) || empty($paymentpurpose) || empty($paymentdate) || empty($paymentpaid) || empty($alid)) {
+        echo "<p style='text-align:center; color: red;'>*****Incomplete information. No payment inserted.*****</p>";
+    } else {
+        // Use prepared statements to prevent SQL injection
+        $sql1 = $conn->prepare("INSERT INTO financialdata (payment_id, total_payment, payment_purpose, payment_date, pi_register) 
+                                VALUES (?, ?, ?, ?, ?)");
+        
+        $sql1->bind_param("sssss", $paymentid, $paymentpaid, $paymentpurpose, $paymentdate, $alid);
+
+        if ($sql1->execute()) {
+            echo "<p style='text-align:center; color: green;'>*****Payment successfully inserted.*****</p>";
+            echo "<p style='text-align:center;'><a href='Financial_Record.php'>Go to Financial Record</a></p>";
+        } else {
+            echo "<p style='text-align:center; color: red;'>Error: " . $sql1->error . "</p>";
+        }
+
+        $sql1->close();
+    }
 }
-?>
-</body>
 
+$conn->close();
+?>
+
+</body>
 </html>
