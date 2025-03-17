@@ -1,147 +1,135 @@
 <?php
 session_start();
-if (!isset($_SESSION['id'])){
-	header("location:login.html");
+if (!isset($_SESSION['id'])) {
+    header("location: login.html");
+    exit(); // Ensures the script stops execution after redirection
 }
-else
-{
-  $userid=$_SESSION['id'];
-  $username1=$_SESSION['adname'];
-}
+
+$userid = $_SESSION['id'] ?? '';  // Added null coalescing operator to avoid warnings
+$username1 = $_SESSION['adname'] ?? ''; 
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Manage Alumni</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Alumni</title>
+    <link rel="stylesheet" href="css/header_navigationbar.css"">
+    
+    <?php include_once "setting/adminpage_navigation.php"; ?>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
 
-<link rel="stylesheet" href="css/header_navigationbar.css" />
+        h1 {
+            padding-left: 100px;
+            color: #333;
+        }
 
-<?php
-include_once "setting/adminpage_navigation.php";
-?>
+        table {
+            width: 70%;
+            margin: auto;
+            border-collapse: collapse;
+            background-color: white;
+        }
 
+        th, td {
+            border: 1px solid #050119;
+            text-align: center;
+            padding: 10px;
+        }
 
+        th {
+            background-color: #ddd;
+            cursor: pointer;
+        }
+
+        th:hover {
+            background-color: #bbb;
+        }
+
+        #button1 {
+            padding: 5px 20px;
+            background-color: #F9E79F;
+            color: black;
+            border: 2px solid #FEF9E7;
+            cursor: pointer;
+        }
+
+        .approve-link {
+            display: block;
+            text-align: right;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
 </head>
-<style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 70%;
-	background-color: white;
-}
-
-td, th {
-    border: 1px solid #050119;
-    text-align: center;
-    padding: 8px;
-}
-
-#button1 {
-	padding: 5px 20px;
-    background-color: #F9E79F;
-    color: black;
-    border: 2px solid #FEF9E7;
-}
-	
-</style>
 
 <body>
-<br>
-<?php
-include_once"connect_database.php";
-?>
 
-<h1 style="padding-left:100px"> View Alumni Membership </h1>
-<br>
-<table id="alumni" align="center">
-<tr>
-	<th>NO </th>
-	<th> Alumni Registration Number</th>
-	<th onclick="sortTable(0)"> Alumni Name </th>
-	<th onclick="sortTable(2)"> Approval Status </th>
-</tr>
+<?php include_once "connect_database.php"; ?>
 
-<?php
-$sqlshow1 = "SELECT alumnimember.pi_register, alumniinfo.pi_name, alumnimember.al_status FROM alumnimember, alumniinfo WHERE alumniinfo.pi_register=alumnimember.pi_register";
-$result1 = $conn->query($sqlshow1);
-$no = 1;
+<h1>View Alumni Membership</h1>
+<table id="alumni">
+    <thead>
+        <tr>
+            <th>NO</th>
+            <th>Alumni Registration Number</th>
+            <th onclick="sortTable(2)">Alumni Name</th>
+            <th onclick="sortTable(3)">Approval Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        $sql = "SELECT alumnimember.pi_register, alumniinfo.pi_name, alumnimember.al_status 
+                FROM alumnimember 
+                INNER JOIN alumniinfo 
+                ON alumniinfo.pi_register = alumnimember.pi_register";
 
-while ($row=$result1->fetch_assoc())
-{
-	echo "<tr>";
-	echo "<td>" . $no++. "</td>";
-	echo "<td>" . $row['pi_register']. "</td>";
-	echo "<td>" . $row['pi_name']. "</td>";
-	echo "<td>" . $row['al_status']. "</td>";
-	echo "</tr>";
-}
-$conn->close();
-?>
-<tr>
-<td colspan="5" style= 'text-align:right'><a href="approve.php"> Approve Membership </a> </td>
-</tr>
+        $result = $conn->query($sql);
+        $no = 1;
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $no++ . "</td>";
+            echo "<td>" . htmlspecialchars($row['pi_register']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['pi_name']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['al_status']) . "</td>";
+            echo "</tr>";
+        }
+
+        $conn->close();
+        ?>
+    </tbody>
 </table>
-<br><br><br><br>
+
+<div class="approve-link">
+    <a href="approve.php">Approve Membership</a>
+</div>
 
 <script>
-
 function sortTable(n) {
-  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-  table = document.getElementById("alumni");
-  switching = true;
-  //Set the sorting direction to ascending:
-  dir = "asc"; 
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.getElementsByTagName("TR");
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 1; i < (rows.length - 1); i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[n];
-      y = rows[i + 1].getElementsByTagName("TD")[n];
-      /*check if the two rows should switch place,
-      based on the direction, asc or desc:*/
-      if (dir == "asc") {
-        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch= true;
-          break;
-        }
-      } else if (dir == "desc") {
-        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-          //if so, mark as a switch and break the loop:
-          shouldSwitch = true;
-          break;
-        }
-      }
-    }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-      //Each time a switch is done, increase this count by 1:
-      switchcount ++;      
-    } else {
-      /*If no switching has been done AND the direction is "asc",
-      set the direction to "desc" and run the while loop again.*/
-      if (switchcount == 0 && dir == "asc") {
-        dir = "desc";
-        switching = true;
-      }
-    }
-  }
-}	
+    let table = document.getElementById("alumni");
+    let rows = Array.from(table.rows).slice(1); // Exclude header row
+    let ascending = true;
 
+    rows.sort((rowA, rowB) => {
+        let cellA = rowA.cells[n].innerText.toLowerCase();
+        let cellB = rowB.cells[n].innerText.toLowerCase();
+        
+        return ascending ? cellA.localeCompare(cellB) : cellB.localeCompare(cellA);
+    });
 
+    ascending = !ascending; // Toggle sorting order
+
+    rows.forEach(row => table.appendChild(row)); // Reorder rows in DOM
+}
 </script>
+
 </body>
 </html>
