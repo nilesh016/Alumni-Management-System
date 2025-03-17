@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 
 include_once "connect_database.php"; // Ensure database connection is included
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,7 @@ include_once "connect_database.php"; // Ensure database connection is included
     <div class="status_container">
         <?php
         if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['register'])) {
-            // Fetch Form Data
+            // Fetch and sanitize form data
             $name = trim($_POST['pi_name']);
             $gender = trim($_POST['pi_gender']);
             $registration = trim($_POST['pi_register']);
@@ -30,6 +31,7 @@ include_once "connect_database.php"; // Ensure database connection is included
             $password = trim($_POST['pi_password']);
             $course = trim($_POST['pi_course']);
 
+            // Check for empty fields
             if (empty($name) || empty($gender) || empty($registration) || empty($branch) || empty($sessiona) || empty($email) || empty($mobile) || empty($password) || empty($course)) {
                 echo "<h1 class='error'>Incomplete Information</h1>";
                 echo "<p>Please fill in all required fields and try again.</p>";
@@ -38,11 +40,12 @@ include_once "connect_database.php"; // Ensure database connection is included
                 echo "<script>setTimeout(() => { window.location.href = 'register.html'; }, 10000);</script>";
             } else {
                 $al_status = "Not Approved";
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT); // Secure password hashing
 
                 // Insert into `alumnimember`
                 $register_sql = "INSERT INTO alumnimember (pi_register, al_password, al_status) VALUES (?, ?, ?)";
                 $stmt = $conn->prepare($register_sql);
-                $stmt->bind_param("sss", $registration, $password, $al_status);
+                $stmt->bind_param("sss", $registration, $hashed_password, $al_status);
 
                 if ($stmt->execute()) {
                     // Insert into `alumniinfo`
@@ -50,17 +53,24 @@ include_once "connect_database.php"; // Ensure database connection is included
                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                     $stmt2 = $conn->prepare($info_sql);
                     $stmt2->bind_param("ssssssss", $name, $gender, $registration, $branch, $sessiona, $email, $mobile, $course);
-                    $stmt2->execute();
-
-                    echo "<h1 class='success'>Registration Successful!</h1>";
-                    echo "<p>Welcome, <strong>$name</strong>. Your account has been created successfully.</p>";
-                    echo "<p>Redirecting you to the login page in <span id='countdown'>5</span> seconds...</p>";
-                    echo "<p>Or click <a href='login.html'>here</a> to login now.</p>";
-                    echo "<script>setTimeout(() => { window.location.href = 'login.html'; }, 5000);</script>";
+                    
+                    if ($stmt2->execute()) {
+                        echo "<h1 class='success'>Registration Successful!</h1>";
+                        echo "<p>Welcome, <strong>" . htmlspecialchars($name) . "</strong>. Your account has been created successfully.</p>";
+                        echo "<p>Redirecting you to the login page in <span id='countdown'>5</span> seconds...</p>";
+                        echo "<p>Or click <a href='login.html'>here</a> to login now.</p>";
+                        echo "<script>setTimeout(() => { window.location.href = 'login.html'; }, 5000);</script>";
+                    } else {
+                        echo "<h1 class='error'>Error!</h1>";
+                        echo "<p>Failed to insert into alumniinfo. Please try again.</p>";
+                        echo "<p>Error: " . htmlspecialchars($stmt2->error) . "</p>";
+                        echo "<p>Redirecting in <span id='countdown'>10</span> seconds...</p>";
+                        echo "<script>setTimeout(() => { window.location.href = 'register.html'; }, 10000);</script>";
+                    }
                 } else {
                     echo "<h1 class='error'>Registration Failed!</h1>";
                     echo "<p>There was an error processing your registration.</p>";
-                    echo "<p>Error: " . htmlspecialchars($conn->error) . "</p>";
+                    echo "<p>Error: " . htmlspecialchars($stmt->error) . "</p>";
                     echo "<p>Redirecting back to the registration page in <span id='countdown'>10</span> seconds...</p>";
                     echo "<p>Or click <a href='register.html'>here</a> to try again.</p>";
                     echo "<script>setTimeout(() => { window.location.href = 'register.html'; }, 10000);</script>";
@@ -92,3 +102,4 @@ include_once "connect_database.php"; // Ensure database connection is included
 
 </body>
 </html>
+
