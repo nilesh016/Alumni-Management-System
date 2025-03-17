@@ -1,18 +1,32 @@
 <?php
 // logout.php
 session_start();
-session_destroy();
-echo "<br /><br />Logout successful. Back to main page in 3 seconds";
-header("refresh:3;url=index.php");
-?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
-<link rel="stylesheet" href="css/logout.css" />
-<body>
 
+// Destroy the session
+session_destroy();
+
+// Inform the user about logout and redirect
+echo "<p class='message'>Logout successful. Redirecting to the main page in 3 seconds...</p>";
+header("refresh:3;url=index.php");
+exit(); // Ensure script stops execution after sending the header
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <link rel="stylesheet" href="css/logout.css">
+    <style>
+        .message {
+            text-align: center;
+            font-size: 20px;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
 </body>
 </html>
