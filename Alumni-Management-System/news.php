@@ -1,80 +1,120 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>News</title>
-<link rel="stylesheet" href="css/n3.css" />
 <?php
-include_once"connect_database.php";
-include_once"setting/news_navigation.php";
+include_once "connect_database.php";
+include_once "setting/news_navigation.php";
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News</title>
+    <link rel="stylesheet" href="css/n3.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #050119;
+            color: white;
+        }
+
+        .np1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
-<body >
-<div id="announcements">
-<p class="np1">Announcements</p>
-<table class="tb1" cellspacing="15" align="center">
-<?php
-	echo "<tr>
-	<th class=nth1>ANNOUNCEMENTS</th>
-	<th class=nth1>DESCRIPTION</th>
-	<th class=nth1>TIME</th></tr>";
-	$sql = "SELECT * FROM announcement ORDER BY ann_time";
-	$result = $conn->query($sql);
-	if($result==true)
-	{
-		while($row = $result->fetch_assoc()) 
-		{
-			echo "<tr>";
-			echo "<td class=ntd1>".$row["ann_name"]."</td>
-				<td class=ntd1>".$row["ann_desc"]."</td>
-				<td class=ntd1>".$row["ann_time"]."</td>";
-			echo "</tr>";
-		}
-	}
-	else
-	{
-		echo "<p>No events</p>";	
-	}
-?>
-</table>
-</div>
-<br><br><br>
-<br /><hr color="#050119" size="4"/>
+<body>
+<div class="container">
 
-<div id="events">
-<p class="np1">Events</p>
-<br />
-<?php
-	$sql2 = "SELECT * FROM event ORDER BY e_date, e_time";
-	$result2 = $conn->query($sql2);
-	
-	if($result2==true)
-	{
-		echo "<table class=tb1 align=center cellspacing=10>";
-		echo "<tr><th class=nth1>EVENT</th>
-		<th class=nth1>DATE</th>
-		<th class=nth1>TIME</th>
-		<th class=nth1>VENUE</th>
-		<th class=nth1>DESCRIPTION</th></tr>";
-		while($row =$result2->fetch_assoc()){
-			echo "<tr>";
-			echo "<td class=ntd1>".$row["e_name"]."</td>
-					<td class=ntd1>".$row["e_date"]."</td>
-					<td class=ntd1>".$row["e_time"]."</td>
-					<td class=ntd1>".$row["e_venue"]."</td>
-					<td class=ntd1>".$row["e_desc"]."</td>";
-			echo "<tr>";
-		}
-		echo "</table>";
-	}
-	else
-	{
-		echo "<p>No events</p>";	
-	}
-?>
-</div>
+    <!-- Announcements Section -->
+    <h2 class="np1">Announcements</h2>
+    
+    <?php
+    $sql = "SELECT * FROM announcement ORDER BY ann_time DESC";
+    $result = $conn->query($sql);
 
-<br><br><br><br><br />
+    if ($result->num_rows > 0) {
+        echo "<table class='tb1'>";
+        echo "<tr>
+                <th>ANNOUNCEMENTS</th>
+                <th>DESCRIPTION</th>
+                <th>TIME</th>
+              </tr>";
+
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                    <td>" . htmlspecialchars($row["ann_name"]) . "</td>
+                    <td>" . htmlspecialchars($row["ann_desc"]) . "</td>
+                    <td>" . htmlspecialchars($row["ann_time"]) . "</td>
+                  </tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p>No announcements available</p>";
+    }
+    ?>
+
+    <hr color="#050119" size="4"/>
+
+    <!-- Events Section -->
+    <h2 class="np1">Events</h2>
+    
+    <?php
+    $sql2 = "SELECT * FROM event ORDER BY e_date, e_time";
+    $result2 = $conn->query($sql2);
+
+    if ($result2->num_rows > 0) {
+        echo "<table class='tb1'>";
+        echo "<tr>
+                <th>EVENT</th>
+                <th>DATE</th>
+                <th>TIME</th>
+                <th>VENUE</th>
+                <th>DESCRIPTION</th>
+              </tr>";
+
+        while ($row = $result2->fetch_assoc()) {
+            echo "<tr>
+                    <td>" . htmlspecialchars($row["e_name"]) . "</td>
+                    <td>" . htmlspecialchars($row["e_date"]) . "</td>
+                    <td>" . htmlspecialchars($row["e_time"]) . "</td>
+                    <td>" . htmlspecialchars($row["e_venue"]) . "</td>
+                    <td>" . htmlspecialchars($row["e_desc"]) . "</td>
+                  </tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p>No events available</p>";
+    }
+    ?>
+
+</div>
 </body>
 </html>
